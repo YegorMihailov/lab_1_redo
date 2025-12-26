@@ -1,4 +1,16 @@
-def tokenize(expression: str):
+def tokenize(expression: str) -> list:
+    """Split a mathematical expression string into tokens
+    
+    Args:
+        expression (str): Mathematical expression as a string
+    
+    Returns:
+        list: List of tokens
+    
+    Raises:
+        ValueError: If expression contains unknown symbols
+    """
+
     tokens = []
     current_number = ''
 
@@ -20,7 +32,21 @@ def tokenize(expression: str):
 
     return tokens
 
-def expr(tokens):
+def expr(tokens: list) -> int | float:
+    """Parse and evaluate expression level (addition and subtraction)
+    
+    Handles addition and subtraction operations with left associativity
+    
+    Args:
+        tokens (list): List of tokens
+    
+    Returns:
+        int or float: Result of the expression
+    
+    Raises:
+        ZeroDivisionError: If division by zero occurs
+    """
+
     try:
         res = term(tokens)
 
@@ -37,7 +63,18 @@ def expr(tokens):
     except ZeroDivisionError:
         raise
 
-def term(tokens):
+def term(tokens: list) -> int | float:
+    """Parse and evaluate term level (multiplication and division)
+        
+    Args:
+        tokens (list): List of tokens
+    
+    Returns:
+        int or float: Result of the term
+    
+    Raises:
+        ZeroDivisionError: If division by zero occurs
+    """
     res = factor(tokens)
 
     while tokens and (tokens[0] == '*' or tokens[0] == '/'):
@@ -54,7 +91,17 @@ def term(tokens):
     return res           
 
 
-def factor(tokens: list):
+def factor(tokens: list) -> int | float | str:
+    """Parse and evaluate factor level (numbers and unary operators)
+    
+    Args:
+        tokens (list): List of tokens
+    
+    Returns:
+        int or float: Parsed number value
+        str: 'Invalid expression' if parsing fails
+    """
+
     try:
         token = tokens.pop(0)
 
@@ -78,7 +125,22 @@ def factor(tokens: list):
     except:
         return 'Invalid expression'
   
-def evaluate(expression):
+def evaluate(expression) -> int | float | str:
+    """
+    Evaluate a mathematical expression string
+    
+    Args:
+        expression (str): Mathematical expression as a string
+    
+    Returns:
+        int or float: Result of the expression
+        str: 'Invalid expression' for syntax errors
+    
+    Raises:
+        ZeroDivisionError: If division by zero occurs
+        ValueError: If expression contains unknown symbols
+    """
+    
     try:
         tokens = tokenize(expression)
         return expr(tokens)
