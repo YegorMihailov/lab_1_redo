@@ -30,7 +30,7 @@ def expr(tokens):
 
             if operator == '+':
                 res += number_2
-            elif operator == '-':
+            else:
                 res -= number_2
         
         return res
@@ -83,6 +83,8 @@ def evaluate(expression):
         tokens = tokenize(expression)
         return expr(tokens)
     except ZeroDivisionError:
+        raise
+    except ValueError:
         raise
     except:
         return 'Invalid expression'

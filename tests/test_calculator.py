@@ -22,8 +22,11 @@ class TestCalculator(unittest.TestCase):
         with self.assertRaises(ZeroDivisionError):
             evaluate('5 / 0')
     
+    def test_unknown_symbol(self):
+        with self.assertRaises(ValueError):
+            evaluate('R / 5')
+    
     def test_invalid_expression(self):
-        self.assertEqual(evaluate('R / 5'), 'Invalid expression')
         self.assertEqual(evaluate('+'), 'Invalid expression')
         self.assertEqual(evaluate('5-*5'), 'Invalid expression')
         self.assertEqual(evaluate('5/*5'), 'Invalid expression')
